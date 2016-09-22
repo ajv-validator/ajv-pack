@@ -1,0 +1,23 @@
+{
+  "name": "ajv-pack",
+  "version": "0.0.0",
+  "description": "Produces a compact module exporting JSON-schema validation functions compiled by Ajv",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/epoberezkin/ajv-pack.git"
+  },
+  "keywords": [
+    "Ajv",
+    "JSON-Schema"
+  ],
+  "author": "Evgeny Poberezkin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/epoberezkin/ajv-pack/issues"
+  },
+  "homepage": "https://github.com/epoberezkin/ajv-pack#readme"
+}
