@@ -1,9 +1,11 @@
 'use strict';
 
 var beautify = require('js-beautify').js_beautify;
-var validatePack = require('./lib/dotjs/validate_pack');
+var packValidate = require('./lib/pack_validate');
+var AjvPack = require('./lib/instance');
 
-module.exports = function (ajv, validate) {
-  var code = validatePack({ ajv: ajv, validate: validate });
-  return beautify(code, { indent_size: 2 });
-}
+module.exports = packValidate;
+
+packValidate.instance = function (ajv) {
+  return new AjvPack(ajv);
+};
