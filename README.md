@@ -2,6 +2,10 @@
 
 Produces a compact module exporting JSON-schema validation functions compiled by [Ajv](https://github.com/epoberezkin/ajv)
 
+[![Build Status](https://travis-ci.org/epoberezkin/ajv-pack.svg?branch=master)](https://travis-ci.org/epoberezkin/ajv-pack)
+[![npm version](https://badge.fury.io/js/ajv-pack.svg)](https://www.npmjs.com/package/ajv-pack)
+[![Coverage Status](https://coveralls.io/repos/github/epoberezkin/ajv-pack/badge.svg?branch=master)](https://coveralls.io/github/epoberezkin/ajv-pack?branch=master)
+
 
 ## Purpose
 
