@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "build": "node scripts/compile-dots.js",
-    "test": "npm run build && npm run test-cov",
+    "eslint": "eslint index.js lib/*.js spec/*.js",
+    "test": "npm run eslint && npm run build && npm run test-cov",
     "test-debug": "mocha spec/*.spec.js --debug-brk -R spec",
     "test-spec": "mocha spec/*.spec.js -R spec",
     "test-cov": "istanbul cover -x '**/spec/**' node_modules/mocha/bin/_mocha -- spec/*.spec.js -R spec"
@@ -36,8 +37,10 @@
     "ajv": "^4.7.4",
     "coveralls": "^2.11.14",
     "dot": "^1.0.3",
+    "eslint": "^3.6.0",
     "glob": "^7.1.0",
     "istanbul": "^0.4.5",
-    "mocha": "^3.0.2"
+    "mocha": "^3.0.2",
+    "pre-commit": "^1.1.3"
   }
 }

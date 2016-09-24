@@ -1,6 +1,6 @@
 'use strict';
 
-var Ajv = require('Ajv');
+var Ajv = require('ajv');
 var AjvPack = require('..').instance;
 var assert = require('assert');
 
