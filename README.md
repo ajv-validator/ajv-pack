@@ -16,14 +16,23 @@ This package allows to create standalone modules for validation functions that a
 - to avoid dynamic code evaluation with Function constructor (used for schema compilation) - it can be prohibited in case [Content Security Policy](http://www.html5rocks.com/en/tutorials/security/content-security-policy/) is used.
 
 
-## Install
+## Usage with CLI
 
+In most cases you would use this package via [ajv-cli](https://github.com/jessedc/ajv-cli) (>= 1.0.0) to generate module that exports validation function.
+
+```sh
+npm install -g ajv-cli
+ajv -s schema.json -o validate_schema.js
 ```
+
+`validate_schema.js` will contain the module exporting validation function that can be bundled into your application.
+
+
+## Usage from code
+
+```sh
 npm install ajv-pack
 ```
-
-
-## Usage
 
 ```javascript
 var Ajv = require('ajv'); // version >= 4.7.4
@@ -61,9 +70,9 @@ Ajv should still be a run-time dependency, but generated modules will only depen
 
 At the moment ajv-pack does not support schemas with:
 
-- custom keywords ('compiled' and 'validated'); custom inline and macro keywords are supported.
+- custom 'compiled' and 'validated' keywords; custom inline and macro keywords are supported.
 - custom formats (they will be ignored during validation).
-- mutually recursive references (reference to the current schema `{ "$ref": "#" }` is supported).
+- recursive references (reference to the current schema `{ "$ref": "#" }` is supported).
 - asynchronous schemas (they require custom keywords/formats).
 
 
