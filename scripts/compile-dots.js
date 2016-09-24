@@ -6,12 +6,12 @@ var glob = require('glob')
   , doT = require('dot')
   , beautify = require('js-beautify').js_beautify;
 
-// var defs = {};
-// var defFiles = glob.sync('../lib/dot/**/*.def', { cwd: __dirname });
-// defFiles.forEach(function (f) {
-//   var name = path.basename(f, '.def');
-//   defs[name] = fs.readFileSync(path.join(__dirname, f));
-// });
+var defs = {};
+var defFiles = glob.sync('../lib/dot/**/*.def', { cwd: __dirname });
+defFiles.forEach(function (f) {
+  var name = path.basename(f, '.def');
+  defs[name] = fs.readFileSync(path.join(__dirname, f));
+});
 
 var files = glob.sync('../lib/dot/**/*.jst', { cwd: __dirname });
 
@@ -27,7 +27,7 @@ files.forEach(function (f) {
   var fileName = path.basename(f, '.jst');
   var targetPath = path.join(dotjsPath, fileName + '.js');
   var template = fs.readFileSync(path.join(__dirname, f));
-  var code = doT.compile(template/*, defs*/)
+  var code = doT.compile(template, defs)
                 .toString()
                 .replace(FUNCTION_NAME, 'function generate_' + fileName + '(it) {');
   code = "'use strict';\nmodule.exports = " + code;

@@ -1,23 +1,9 @@
-'use strict';
-
-var RULES = require('ajv/lib/compile/rules')();
-var formats = require('ajv/lib/compile/formats')({{= it.ajv._opts.format ? "'" + it.ajv._opts.format + "'" : '' }});
-var equal = require('ajv/lib/compile/equal');
-var ucs2length = require('ajv/lib/compile/ucs2length');
-
-{{? it.validate.$async }}
-  var co = require('co');
-  var ValidationError = require('ajv/lib/compile/validation_error');
-{{?}}
-
 /*
 'root',
 'refVal',
-'defaults',
 'customRules'
 */
-
-var validate = module.exports = (function() {
+var {{=it.funcName}} = (function() {
   {{~it.validate.patterns:p:i}}
     var pattern{{=i}} = new RegExp('{{=it.util.escapeQuotes(p)}}');
   {{~}}
@@ -26,8 +12,23 @@ var validate = module.exports = (function() {
     var default{{=i}} = {{=JSON.stringify(d)}};
   {{~}}
 
-  return {{= it.validate.toString() }};
+  {{~it.validate.refVal:r:i}}
+    {{? i>0 && typeof r == 'function' }}
+      {{
+        var $it = it.util.copy(it);
+        $it.validate = r;
+        $it.funcName = 'refVal' + i;
+      }}
+      {{= it.gen_validate($it) }}
+    {{?}}
+  {{~}}
+
+  {{
+    var code = it.validate.toString();
+    code = code.replace(/^function\s*\(/, 'function validate(');
+  }}
+  return {{= code }};
 })();
 
-validate.schema = {{= JSON.stringify(it.validate.schema )}};
-validate.errors = null;
+{{=it.funcName}}.schema = {{= JSON.stringify(it.validate.schema )}};
+{{=it.funcName}}.errors = null;

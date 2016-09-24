@@ -10,6 +10,7 @@
   "scripts": {
     "build": "node scripts/compile-dots.js",
     "test": "npm run build && npm run test-cov",
+    "test-debug": "mocha spec/*.spec.js --debug-brk -R spec",
     "test-spec": "mocha spec/*.spec.js -R spec",
     "test-cov": "istanbul cover -x '**/spec/**' node_modules/mocha/bin/_mocha -- spec/*.spec.js -R spec"
   },

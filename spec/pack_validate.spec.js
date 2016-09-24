@@ -15,9 +15,7 @@ describe('module for a single validation function', function() {
 
   it('should validate data', function() {
     var schema = { type: 'string' };
-    var validate = ajv.compile(schema);
-    var validateModule = pack(ajv, validate);
-    var packedValidate = requireFromString(validateModule);
+    var packedValidate = packCompile(schema);
 
     assert.strictEqual(packedValidate('foo'), true);
     assert.strictEqual(packedValidate(1), false);
@@ -25,9 +23,7 @@ describe('module for a single validation function', function() {
 
   it('should support schemas with pattern keyword', function() {
     var schema = { type: 'string', pattern: '^[a-z]+$' };
-    var validate = ajv.compile(schema);
-    var validateModule = pack(ajv, validate);
-    var packedValidate = requireFromString(validateModule);
+    var packedValidate = packCompile(schema);
 
     assert.strictEqual(packedValidate('foo'), true);
     assert.strictEqual(packedValidate('foo1'), false);
@@ -45,12 +41,26 @@ describe('module for a single validation function', function() {
       },
       required: ['foo']
     };
-    var validate = ajv.compile(schema);
-    var validateModule = pack(ajv, validate);
-    var packedValidate = requireFromString(validateModule);
+    var packedValidate = packCompile(schema);
 
     var data = {};
     assert.strictEqual(packedValidate(data), true);
     assert.deepStrictEqual(data, { foo: { bar: 1 } });
   });
+
+  it('should support referenced not inlined schemas', function() {
+    ajv = new Ajv({sourceCode: true, inlineRefs: false});
+    ajv.addSchema({ id: 'str', type: 'string' });
+    var schema = { $ref: 'str' };
+    var packedValidate = packCompile(schema);
+
+    assert.strictEqual(packedValidate('foo'), true);
+    assert.strictEqual(packedValidate(1), false);
+  });
+
+  function packCompile(schema) {
+    var validate = ajv.compile(schema);
+    var validateModule = pack(ajv, validate);
+    return requireFromString(validateModule);
+  }
 });
