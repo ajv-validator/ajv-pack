@@ -16,8 +16,28 @@ var ucs2length = require('ajv/lib/compile/ucs2length');
 'defaults',
 'customRules'
 */
+{{
+  var SINGLE_QUOTE = /'|\\/g;
+  function escapeQuotes(str) {
+    return str.replace(SINGLE_QUOTE, '\\$&')
+              .replace(/\n/g, '\\n')
+              .replace(/\r/g, '\\r')
+              .replace(/\f/g, '\\f')
+              .replace(/\t/g, '\\t');
+  }
+}}
 
-var validate = module.exports = {{= it.validate.toString() }};
+var validate = module.exports = (function() {
+  {{~it.validate.patterns:p:i}}
+    var pattern{{=i}} = new RegExp('{{=escapeQuotes(p)}}');
+  {{~}}
+
+  {{~it.validate.defaults:d:i}}
+    var default{{=i}} = {{=JSON.stringify(d)}};
+  {{~}}
+
+  return {{= it.validate.toString() }};
+})();
 
 validate.schema = {{= JSON.stringify(it.validate.schema )}};
 validate.errors = null;
