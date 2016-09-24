@@ -11,7 +11,7 @@ Produces a compact module exporting JSON-schema validation functions compiled by
 
 This package allows to create standalone modules for validation functions that are pre-compiled and can be used without Ajv. It can be necessary for several reasons:
 
-- to reduce the browser bundle size - Ajv is not included in the bundle (although for a large number of schemas the bundle size can become bigger instead - when the total size of generated validation code is bigger than Ajv code).
+- to reduce the browser bundle size - Ajv is not included in the bundle (although if you have a large number of schemas the bundle can become bigger - when the total size of generated validation code is bigger than Ajv code).
 - to reduce the startup time - the validation and compilation of schemas will happen during build time.
 - to avoid dynamic code evaluation with Function constructor (used for schema compilation) - it can be prohibited in case [Content Security Policy](http://www.html5rocks.com/en/tutorials/security/content-security-policy/) is used.
 
