@@ -8,7 +8,7 @@ describe('AjvPack instance', function() {
   var wrappedAjv;
 
   beforeEach(function() {
-    wrappedAjv = new AjvPack(new Ajv);
+    wrappedAjv = new AjvPack(new Ajv({sourceCode: true}));
   });
 
   it('should compile schemas', function() {

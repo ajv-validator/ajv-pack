@@ -4,11 +4,11 @@
 'customRules'
 */
 var {{=it.funcName}} = (function() {
-  {{~it.validate.patterns:p:i}}
+  {{~it.validate.source.patterns:p:i}}
     var pattern{{=i}} = new RegExp('{{=it.util.escapeQuotes(p)}}');
   {{~}}
 
-  {{~it.validate.defaults:d:i}}
+  {{~it.validate.source.defaults:d:i}}
     var default{{=i}} = {{=JSON.stringify(d)}};
   {{~}}
 
