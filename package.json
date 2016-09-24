@@ -1,6 +1,6 @@
 {
   "name": "ajv-pack",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Produces a compact module exporting JSON-schema validation functions compiled by Ajv",
   "main": "index.js",
   "files": [
@@ -29,14 +29,14 @@
   },
   "homepage": "https://github.com/epoberezkin/ajv-pack#readme",
   "dependencies": {
-    "js-beautify": "^1.6.4"
+    "js-beautify": "^1.6.4",
+    "require-from-string": "^1.2.0"
   },
   "devDependencies": {
     "ajv": "^4.7.4",
     "dot": "^1.0.3",
     "glob": "^7.1.0",
     "istanbul": "^0.4.5",
-    "mocha": "^3.0.2",
-    "require-from-string": "^1.2.0"
+    "mocha": "^3.0.2"
   }
 }
