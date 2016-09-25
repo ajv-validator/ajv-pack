@@ -2,6 +2,7 @@
 
 var Ajv = require('ajv');
 var AjvPack = require('..').instance;
+var ajvKeywords = require('ajv-keywords');
 var assert = require('assert');
 
 describe('AjvPack instance', function() {
@@ -29,6 +30,13 @@ describe('AjvPack instance', function() {
     wrappedAjv.addSchema(strSchema);
     var schema = { $ref: 'str' };
     assert.strictEqual(wrappedAjv.validate(schema, 'foo'), true);
+    assert.strictEqual(wrappedAjv.validate(schema, 1), false);
+  });
+
+  it('should support addKeyword', function() {
+    var schema = { typeof: 'function' };
+    ajvKeywords(wrappedAjv, 'typeof');
+    assert.strictEqual(wrappedAjv.validate(schema, function(){}), true);
     assert.strictEqual(wrappedAjv.validate(schema, 1), false);
   });
 });

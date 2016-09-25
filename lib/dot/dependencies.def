@@ -1,11 +1,29 @@
+{{ var code = out; out = ''; }}
+
 'use strict';
 
-var RULES = require('ajv/lib/compile/rules')();
-var formats = require('ajv/lib/compile/formats')({{= it.ajv._opts.format ? "'" + it.ajv._opts.format + "'" : '' }});
-var equal = require('ajv/lib/compile/equal');
-var ucs2length = require('ajv/lib/compile/ucs2length');
+{{? /RULES/.test(code) }}
+  var RULES = require('ajv/lib/compile/rules')();
+{{?}}
+
+{{? /formats(\.|\[)/.test(code) }}
+  {{ var fmt = it.ajv._opts.format; }}
+  var formats = require('ajv/lib/compile/formats')( {{?fmt}}'{{=fmt}}'{{?}} );
+{{?}}
+
+{{? /ucs2length\s*\(/.test(code) }}
+  var ucs2length = require('ajv/lib/compile/ucs2length');
+{{?}}
+
+{{? /equal\s*\(/.test(code) }}
+  var equal = require('ajv/lib/compile/equal');
+{{?}}
 
 {{? it.validate.$async }}
-  var co = require('co');
   var ValidationError = require('ajv/lib/compile/validation_error');
+  {{? /co\s*\(/.test(code) }}
+    var co = require('co');
+  {{?}}
 {{?}}
+
+{{ out = out + code; }}
