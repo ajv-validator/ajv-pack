@@ -13,7 +13,7 @@ var {{=it.funcName}} = (function() {
   {{~}}
 
   {{~it.validate.refVal:r:i}}
-    {{? i>0 && typeof r == 'function' }}
+    {{? i>0 && typeof r == 'function' && r != it.validate }}
       {{
         var $it = it.util.copy(it);
         $it.validate = r;

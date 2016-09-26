@@ -60,6 +60,43 @@ describe('module for a single validation function', function() {
     assert.strictEqual(packedValidate(1), false);
   });
 
+  it('should support referenced subschemas in referenced schemas', function() {
+    var schema = {
+      type: 'object',
+      properties: {
+        foo: { $ref: '#/definitions/foo' }
+      },
+      definitions: {
+        foo: { type: 'number' }
+      }
+    };
+    ajv = new Ajv({sourceCode: true, inlineRefs: false});
+    var packedValidate = packCompile(schema);
+
+    assert.strictEqual(packedValidate({foo: 1}), true);
+    assert.strictEqual(packedValidate({foo: '1'}), false);
+  });
+
+  it('should support referenced subschemas in referenced schemas', function() {
+    var schema = {
+      properties: {
+        foo: { $ref: '#/definitions/foo' },
+        bar: { $ref: '#/definitions/bar' },
+      },
+      definitions: {
+        foo: { type: 'number' },
+        bar: { $ref: '#/definitions/foo' }
+      }
+    };
+    ajv = new Ajv({sourceCode: true, inlineRefs: true});
+    var packedValidate = packCompile(schema);
+
+    assert.strictEqual(packedValidate({foo: 1, bar: 2}), true);
+    assert.strictEqual(packedValidate({foo: 1, bar: '2'}), false);
+    assert.strictEqual(packedValidate({foo: '1', bar: 2}), false);
+    assert.strictEqual(packedValidate({foo: '1', bar: '2'}), false);
+  });
+
   it('should support format keyword', function() {
     var schema = { type: 'string', format: 'date' };
     var packedValidate = packCompile(schema);
