@@ -88,7 +88,7 @@ describe('module for a single validation function', function() {
         bar: { $ref: '#/definitions/foo' }
       }
     };
-    ajv = new Ajv({sourceCode: true, inlineRefs: true});
+    ajv = new Ajv({sourceCode: true, inlineRefs: false});
     var packedValidate = packCompile(schema);
 
     assert.strictEqual(packedValidate({foo: 1, bar: 2}), true);
