@@ -79,13 +79,18 @@ describe('module for a single validation function', function() {
 
   it('should support referenced subschemas in referenced schemas', function() {
     var schema = {
-      properties: {
-        foo: { $ref: '#/definitions/foo' },
-        bar: { $ref: '#/definitions/bar' },
-      },
+      $ref: '#/definitions/obj',
       definitions: {
+        obj: {
+          properties: {
+            foo: { $ref: '#/definitions/foo' },
+            bar: { $ref: '#/definitions/bar' },
+          },
+          additionalProperties: { $ref: '#/definitions/baz' }
+        },
         foo: { type: 'number' },
-        bar: { $ref: '#/definitions/foo' }
+        bar: { $ref: '#/definitions/foo' },
+        baz: { $ref: '#/definitions/bar' }
       }
     };
     ajv = new Ajv({sourceCode: true, inlineRefs: false});
@@ -95,6 +100,8 @@ describe('module for a single validation function', function() {
     assert.strictEqual(packedValidate({foo: 1, bar: '2'}), false);
     assert.strictEqual(packedValidate({foo: '1', bar: 2}), false);
     assert.strictEqual(packedValidate({foo: '1', bar: '2'}), false);
+    assert.strictEqual(packedValidate({foo: 1, bar: 2, baz: 3}), true);
+    assert.strictEqual(packedValidate({foo: 1, bar: 2, baz: '3'}), false);
   });
 
   it('should support format keyword', function() {

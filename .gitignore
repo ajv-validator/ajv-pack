@@ -38,3 +38,5 @@ jspm_packages
 
 # Compiled templates
 lib/dotjs/*.js
+
+.DS_Store

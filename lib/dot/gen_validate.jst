@@ -12,14 +12,20 @@ var {{=it.funcName}} = (function() {
     var default{{=i}} = {{=JSON.stringify(d)}};
   {{~}}
 
+  var refVal = [];
   {{~it.validate.refVal:r:i}}
-    {{? i>0 && typeof r == 'function' && r.root != it.validate.root }}
-      {{
-        var $it = it.util.copy(it);
-        $it.validate = r;
-        $it.funcName = 'refVal' + i;
-      }}
-      {{= it.gen_validate($it) }}
+    {{? i > 0 }}
+      {{? typeof r == 'function' && r.root != it.validate.root }}
+        {{
+          var $it = it.util.copy(it);
+          $it.validate = r;
+          $it.funcName = 'refVal' + i;
+        }}
+        {{= it.gen_validate($it) }}
+        refVal[{{=i}}] = refVal{{=i}};
+      {{?? typeof r == 'object' }}
+        refVal[{{=i}}] = {{=JSON.stringify(i)}};
+      {{?}}
     {{?}}
   {{~}}
 
