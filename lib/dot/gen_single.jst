@@ -1,4 +1,7 @@
-{{ it.funcName = 'validate'; }}
+{{
+  it.funcName = 'validate';
+  it.refVals = [];
+}}
 {{= it.gen_validate(it) }}
 module.exports = validate;
 {{# def.dependencies }}

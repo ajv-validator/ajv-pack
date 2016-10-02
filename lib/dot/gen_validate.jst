@@ -4,30 +4,33 @@
 'customRules'
 */
 var {{=it.funcName}} = (function() {
-  {{~it.validate.source.patterns:p:i}}
+  {{~ it.validate.source.patterns:p:i }}
     var pattern{{=i}} = new RegExp('{{=it.util.escapeQuotes(p)}}');
   {{~}}
 
-  {{~it.validate.source.defaults:d:i}}
+  {{~ it.validate.source.defaults:d:i }}
     var default{{=i}} = {{=JSON.stringify(d)}};
   {{~}}
 
-  var refVal = [];
-  {{~it.validate.refVal:r:i}}
-    {{? i > 0 }}
-      {{? typeof r == 'function' && r.root != it.validate.root }}
-        {{
-          var $it = it.util.copy(it);
-          $it.validate = r;
-          $it.funcName = 'refVal' + i;
-        }}
-        {{= it.gen_validate($it) }}
-        refVal[{{=i}}] = refVal{{=i}};
-      {{?? typeof r == 'object' }}
-        refVal[{{=i}}] = {{=JSON.stringify(i)}};
+  {{? it.refVals[it.refVals.length - 1] != it.validate.refVal }}
+    {{ it.refVals.push(it.validate.refVal); }}
+    var refVal = [];
+    {{~ it.validate.refVal:r:i }}
+      {{? i > 0 }}
+        {{? typeof r == 'function' }}
+          {{
+            var $it = it.util.copy(it);
+            $it.validate = r;
+            $it.funcName = 'refVal' + i;
+          }}
+          {{= it.gen_validate($it) }}
+          refVal[{{=i}}] = refVal{{=i}};
+        {{?? typeof r == 'object' }}
+          refVal[{{=i}}] = {{=JSON.stringify(i)}};
+        {{?}}
       {{?}}
-    {{?}}
-  {{~}}
+    {{~}}
+  {{?}}
 
   {{
     var code = it.validate.toString();
