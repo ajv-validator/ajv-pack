@@ -15,7 +15,7 @@ This package allows to create standalone modules for validation functions that a
 - to reduce the startup time - the validation and compilation of schemas will happen during build time.
 - to avoid dynamic code evaluation with Function constructor (used for schema compilation) - it can be prohibited in case [Content Security Policy](http://www.html5rocks.com/en/tutorials/security/content-security-policy/) is used.
 
-__Please note__: there are many cases when Ajv works as expcted and ajv-pack does not. Some of these cases are listed in [Limitations](#limitations). It is recommended to test schemas compiled with this package more thoroughly than you would when using Ajv (which is very stable and well tested). Please submit issues with cases that fail.
+__Please note__: there are many cases when Ajv works as expected and ajv-pack does not. Some of these cases are listed in [Limitations](#limitations). It is recommended to test schemas compiled with this package more thoroughly than you would when using Ajv (which is very stable and well tested). Please submit issues with cases that fail.
 
 
 ## Usage with CLI
