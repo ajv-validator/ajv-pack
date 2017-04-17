@@ -35,8 +35,8 @@
     "require-from-string": "^1.2.0"
   },
   "devDependencies": {
-    "ajv": "^4.7.4",
-    "ajv-keywords": "^1.1.1",
+    "ajv": "^5.0.0",
+    "ajv-keywords": "^2.0.0",
     "co": "^4.6.0",
     "coveralls": "^2.11.14",
     "dot": "^1.0.3",

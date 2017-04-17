@@ -20,7 +20,7 @@
 {{?}}
 
 {{? it.validate.$async }}
-  var ValidationError = require('ajv/lib/compile/validation_error');
+  var ValidationError = require('ajv/lib/compile/error_classes').Validation;
   {{? /co\s*\(/.test(code) }}
     var co = require('co');
   {{?}}
