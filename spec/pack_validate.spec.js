@@ -195,6 +195,13 @@ describe('module for a single validation function', function() {
     assert.strictEqual(packedValidate(4.01), false);
   });
 
+  it.skip('should support meta-schema', function() {
+    var validate = ajv.getSchema('http://json-schema.org/draft-04/schema#');
+    var validateModule = pack(ajv, validate);
+    var packedValidate = requireFromString(validateModule);
+    assert.strictEqual(packedValidate({ type: 'string' }), true);
+  });
+
 
   function packCompile(schema) {
     var validate = ajv.compile(schema);
