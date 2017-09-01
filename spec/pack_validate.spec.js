@@ -60,6 +60,16 @@ describe('module for a single validation function', function() {
     assert.strictEqual(packedValidate(1), false);
   });
 
+  it('should support referenced schemas with verbose output', function() {
+    ajv = new Ajv({sourceCode: true, verbose: true});
+    ajv.addSchema({ id: 'str', type: 'string' });
+    var schema = { $ref: 'str' };
+    var packedValidate = packCompile(schema);
+
+    assert.strictEqual(packedValidate('foo'), true);
+    assert.strictEqual(packedValidate(1), false);
+  });
+
   it('should support referenced subschemas in referenced schemas', function() {
     var schema = {
       type: 'object',
