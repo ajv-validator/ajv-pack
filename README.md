@@ -24,7 +24,7 @@ In most cases you would use this package via [ajv-cli](https://github.com/jessed
 
 ```sh
 npm install -g ajv-cli
-ajv -s schema.json -o validate_schema.js
+ajv compile -s schema.json -o validate_schema.js
 ```
 
 `validate_schema.js` will contain the module exporting validation function that can be bundled into your application.
