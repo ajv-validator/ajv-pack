@@ -114,6 +114,14 @@ describe('module for a single validation function', function() {
     assert.strictEqual(packedValidate({foo: 1, bar: 2, baz: '3'}), false);
   });
 
+  it('should support enums in inlined referenced schemas', function() {
+    ajv.addSchema({ id: 'enum', type: 'string', enum: ['foo', 'bar'] });
+    var packedValidate = packCompile({ $ref: 'enum' });
+
+    assert.strictEqual(packedValidate('foo'), true);
+    assert.strictEqual(packedValidate('baz'), false);
+  });
+
   it('should support format keyword', function() {
     var schema = { type: 'string', format: 'date' };
     var packedValidate = packCompile(schema);
