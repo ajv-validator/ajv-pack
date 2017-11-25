@@ -24,10 +24,10 @@ var {{=it.funcName}} = (function() {
             $it.funcName = 'refVal' + i;
           }}
           {{= it.gen_validate($it) }}
-          refVal[{{=i}}] = refVal{{=i}};
         {{?? typeof r == 'object' }}
-          refVal[{{=i}}] = {{=JSON.stringify(i)}};
+          var refVal{{=i}} = {{=JSON.stringify(r)}};
         {{?}}
+        refVal[{{=i}}] = refVal{{=i}};
       {{?}}
     {{~}}
   {{?}}
