@@ -122,46 +122,25 @@ describe('module for a single validation function', function() {
     assert.strictEqual(packedValidate('baz'), false);
   });
 
-  it('should support schema compostion', function() {
+  it('should composition of referenced schemas and definitions', function() {
     ajv = new Ajv({sourceCode: true, inlineRefs: false});
-    ajv.addSchema({ id: 'country', enum: ['GBR', 'USA'] });
+    ajv.addSchema({ id: 'value', type: 'number' });
 
     var schema = {
       definitions: {
-        foo: {
-          properties: {
-            foo: { $ref: 'country' }
-          }
-        },
-        bar: {
-          properties: {
-            bar: { type: 'string' }
-          }
-        }
+        word: { type: 'string' }
       },
-      allOf: [
-        {
-          properties: {
-            baz: { type: 'string' },
-          }
-        },
-        {
-          oneOf: [
-            { '$ref': '#/definitions/foo' },
-            { '$ref': '#/definitions/bar' }
-
-            // Changing the order fixes it
-            // { '$ref': '#/definitions/bar' },
-            // { '$ref': '#/definitions/foo' }
-          ]
-        }
+      oneOf: [
+        // swapping these lines fixes it:
+        { $ref: 'value' },
+        { $ref: '#/definitions/word' },
       ]
     };
 
     var packedValidate = packCompile(schema);
-    console.log(packedValidate);
-    const result = packedValidate({baz: 'bob', foo: 'USA'});
-    assert.strictEqual(result, true);
+
+    assert.strictEqual(packedValidate(42), true);
+    assert.strictEqual(packedValidate('foo'), true);
   });
 
   it('should support format keyword', function() {
