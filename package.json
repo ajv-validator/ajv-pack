@@ -32,7 +32,7 @@
   "homepage": "https://github.com/epoberezkin/ajv-pack#readme",
   "dependencies": {
     "js-beautify": "^1.6.4",
-    "require-from-string": "^1.2.0"
+    "require-from-string": "^2.0.2"
   },
   "devDependencies": {
     "ajv": "^5.0.0",
