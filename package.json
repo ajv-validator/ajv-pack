@@ -31,8 +31,10 @@
   },
   "homepage": "https://github.com/epoberezkin/ajv-pack#readme",
   "dependencies": {
-    "js-beautify": "^1.6.4",
     "require-from-string": "^1.2.0"
+  },
+  "optionalDependencies": {
+    "js-beautify": "^1.6.4"
   },
   "devDependencies": {
     "ajv": "^5.0.0",

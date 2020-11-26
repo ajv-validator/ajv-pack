@@ -3,8 +3,14 @@
 var glob = require('glob')
   , fs = require('fs')
   , path = require('path')
-  , doT = require('dot')
-  , beautify = require('js-beautify').js_beautify;
+  , doT = require('dot');
+
+var beautify;
+try {
+  var beautify = require('js-beautify').js_beautify;
+} catch (e) {
+  beautify = null;
+}
 
 var defs = {};
 var defFiles = glob.sync('../lib/dot/**/*.def', { cwd: __dirname });
@@ -30,8 +36,10 @@ files.forEach(function (f) {
   var code = doT.compile(template, defs)
                 .toString()
                 .replace(FUNCTION_NAME, 'function generate_' + fileName + '(it) {');
-  code = "'use strict';\nmodule.exports = " + code;
-  code = beautify(code, { indent_size: 2 }) + '\n';
+  code = "'use strict';\nmodule.exports = " + code + '\n';
+  if (beautify) {
+    code = beautify(code, { indent_size: 2 })
+  };
   fs.writeFileSync(targetPath, code);
   console.log('compiled', fileName);
 });
