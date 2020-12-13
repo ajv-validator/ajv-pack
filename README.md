@@ -1,5 +1,9 @@
 # ajv-pack
 
+## DEPRECATED / ARCHIVED
+
+Please use [standalone validation code](https://github.com/ajv-validator/ajv/blob/master/docs/standalone.md) module included in Ajv v7.
+
 Produces a compact module exporting JSON-schema validation functions compiled by [Ajv](https://github.com/epoberezkin/ajv)
 
 [![Build Status](https://travis-ci.org/epoberezkin/ajv-pack.svg?branch=master)](https://travis-ci.org/epoberezkin/ajv-pack)
