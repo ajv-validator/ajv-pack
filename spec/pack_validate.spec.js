@@ -122,6 +122,27 @@ describe('module for a single validation function', function() {
     assert.strictEqual(packedValidate('baz'), false);
   });
 
+  it('should composition of referenced schemas and definitions', function() {
+    ajv = new Ajv({sourceCode: true, inlineRefs: false});
+    ajv.addSchema({ id: 'value', type: 'number' });
+
+    var schema = {
+      definitions: {
+        word: { type: 'string' }
+      },
+      oneOf: [
+        // swapping these lines fixes it:
+        { $ref: 'value' },
+        { $ref: '#/definitions/word' },
+      ]
+    };
+
+    var packedValidate = packCompile(schema);
+
+    assert.strictEqual(packedValidate(42), true);
+    assert.strictEqual(packedValidate('foo'), true);
+  });
+
   it('should support format keyword', function() {
     var schema = { type: 'string', format: 'date' };
     var packedValidate = packCompile(schema);
